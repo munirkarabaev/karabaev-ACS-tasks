@@ -21,6 +21,10 @@ class Snow(pygame.sprite.Sprite):
 
     def update(self): 
         self.rect.y = self.rect.y + self.speed
+        if self.rect.y > 480:
+            self.rect.y= 0
+            
+        
 #End Class
 
 # -- Colours
