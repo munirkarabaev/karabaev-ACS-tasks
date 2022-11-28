@@ -6,6 +6,8 @@ WHITE = (255,255,255)
 BLUE = (50,50,255)
 YELLOW = (255,255,0)
 ball_width = 20
+lives=5
+
 x_val = 150
 y_val = 200
 x_direction = 4
@@ -14,6 +16,7 @@ x_padd = 0
 y_padd = 20
 # -- Initialise PyGame
 pygame.init()
+font = pygame.font.SysFont('Calibri', 25, True, False)
 # -- Blank Screen
 size = (640,480)
 screen = pygame.display.set_mode(size)
@@ -28,7 +31,7 @@ clock = pygame.time.Clock()
 
 
 ### -- Game Loop
-while not done: 
+while not done and lives>0: 
     # -- User input and controls
     for event in pygame.event.get(): 
         if event.type == pygame.QUIT: 
@@ -48,6 +51,7 @@ while not done:
         #End I]f
     #Next event
 # -- Game logic goes after this comment
+    text = font.render("Lives left: " + str(lives), True, WHITE)
     x_val = x_val + x_direction
     y_val = y_val + y_direction
     if x_val +x_direction< x_padd+15 and y_val>=y_padd and y_val<=y_padd+60 :
@@ -57,6 +61,7 @@ while not done:
         y_val = 200
         x_direction = 4
         y_direction = 4
+        lives=lives-1   #lose a life
     elif x_val >620:
         x_direction = x_direction*-1
     if y_val < 0:
@@ -69,7 +74,7 @@ while not done:
 # -- Draw here 
     pygame.draw.rect(screen, BLUE, (x_val,y_val,ball_width,ball_width))
     pygame.draw.rect(screen, WHITE, (x_padd,y_padd,15,60))
-
+    screen.blit(text, [250, 250])
 
 # -- flip display to reveal new position of objects 
     pygame.display.flip()

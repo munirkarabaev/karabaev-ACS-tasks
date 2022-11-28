@@ -1,5 +1,23 @@
-import pygame
+import pygame 
+import random 
+import math 
 # -- Global Constants
+## -- Define the class snow which is a sprite
+class Snow(pygame.sprite.Sprite): 
+ # Define the constructor for snow 
+    def __init__(self, color, width, height): 
+        # Call the sprite constructor 
+        super().__init__() 
+        # Create a sprite and fill it with colour 
+        self.image = pygame.Surface([width,height]) 
+        self.image.fill(color) 
+        # Set the position of the sprite 
+        self.rect = self.image.get_rect() 
+        self.rect.x = random.randrange(0, 600) 
+        self.rect.y = random.randrange(0, 400)
+        #End Procedure
+#End Class
+
 # -- Colours
 BLACK = (0,0,0)
 WHITE = (255,255,255)
@@ -14,12 +32,21 @@ screen = pygame.display.set_mode(size)
 pygame.display.set_caption("My Window")
 # -- Exit game flag set to false
 done = False
+snow_group = pygame.sprite.Group() 
+all_sprites_group = pygame.sprite.Group() 
 
 sun_x = 40
 sun_y = 100
 # -- Manages how fast screen refreshes
 clock = pygame.time.Clock()
 
+# Create the snowflakes 
+number_of_flakes = 50 # we are creating 50 snowflakes
+for x in range (number_of_flakes): 
+    my_snow = snow(WHITE, 5, 5) # snowflakes are white with size 5 by 5 px
+    snow_group.add (my_snow) # adds the new snowflake to the group of snowflakes
+    all_sprites_group.add (my_snow) # adds it to the group of all Sprites
+#Next 
 
 ### -- Game Loop 
 while not done: 
@@ -30,16 +57,23 @@ while not done:
         #End I]f
     #Next event
 # -- Game logic goes after this comment
+# - Screen background is BLACK 
+    screen.fill (BLACK) 
+# -- Draw here 
+    all_sprites_group.draw (screen)
 
-    sun_x = sun_x + 5
-    if sun_x>740:
-        sun_x=0
 
 # -- Screen background is BLACK 
     screen.fill (BLACK) 
-# -- Draw here 
-    pygame.draw.rect(screen, BLUE, (220,165,200,150)) 
-    pygame.draw.circle(screen, YELLOW, (sun_x, sun_y), 40, 0)
+# - Draw here 
+
+
+
+
+
+
+
+
 
 # -- flip display to reveal new position of objects 
     pygame.display.flip()
